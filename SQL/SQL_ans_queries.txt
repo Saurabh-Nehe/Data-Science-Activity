@@ -1,0 +1,32 @@
+Topic - Condition + String matching + logical operator
+
+1.  SELECT CustomerID ,FirstName,LastName,City FROM customers WHERE FirstName LIKE 'N%' AND City = "Berlin";
+
+2.  SELECT TrackId,Name,Composer,UnitPrice FROM tracks WHERE UnitPrice BETWEEN 1.00 AND 2.00;
+
+Topic -Groupby
+
+1.  SELECT InvoiceDate ,SUM(Total) as Total, AVG(Total) as Average FROM invoices WHERE InvoiceDate >= '2012-06-01' AND InvoiceDate <= '2012-06-30' GROUP BY InvoiceDate;
+
+2.  SELECT TrackId , SUM(Quantity) as Total_Quantity FROM invoice_items GROUP  BY TrackId ORDER BY Total_Quantity DESC;
+
+Topic- joins
+1. 
+SELECT ArtistId ,Name FROM artists 
+WHERE ArtistId
+NOT IN(
+SELECT A.ArtistId FROM artists AS A 
+INNER JOIN albums B ON A.ArtistId =B.ArtistId 
+INNER JOIN tracks AS C ON B.AlbumId =C.AlbumId 
+INNER JOIN playlist_track AS D ON C.TrackId=D.TrackId 
+) ;
+
+2.
+
+SELECT a.AlbumId,a.Title,count(pt.PlaylistId)
+FROM albums a
+INNER JOIN tracks t ON t.AlbumId = a.AlbumId
+INNER JOIN playlist_track pt ON pt.TrackId = t.TrackId
+GROUP BY a.AlbumId,a.Title
+HAVING count(pt.PlaylistId) > 10;
+
